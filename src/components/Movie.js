@@ -6,7 +6,7 @@ import styles from './Movie.module.css';
 const Movie = ({ id, coverImg, title, year, summary, genres }) => {
   return (
     <div className={styles.movie}>
-      <Link to={`/movie/${id}`}>
+      <Link to={`/react-movie-app/movie/${id}`}>
         <img src={coverImg} alt={title} className={styles.movie__img} />
         <div className={styles.movie__content}>
           <div className={styles.movie__title__content}>
