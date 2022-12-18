@@ -21,6 +21,7 @@
     "eject": "react-scripts eject",
     "deploy": "gh-pages -d build"
   },
+  "homepage": "https://rosejang2000.github.io/react-movie-app/",
   "eslintConfig": {
     "extends": [
       "react-app",
