@@ -78,34 +78,35 @@ label button {
   border: 1px solid #111;
 }
 
-/* 
-.movies {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(20rem, 1fr));
-  grid-gap: 100px;
-  padding: 2%;
-  width: 80%;
-  padding-top: 70px;
-}
-
-@media screen and (max-width: 1300px) {
-  .movies {
-    grid-template-columns: repeat(2, minmax(20rem, 1fr));
-    width: 80%;
-  }
-}
-
-@media screen and (max-width: 1090px) {
-  .movies {
-    grid-template-columns: 1fr;
-    width: 100%;
-  }
-} */
-
 .movies {
   display: flex;
   flex-wrap: wrap;
   width: 90%;
   justify-content: center;
-  padding-top: 3rem;
+  padding-top: 0.5rem;
+}
+
+@media screen and (max-width: 600px) {
+  .filter__button__container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    padding-right: 1rem;
+    justify-content: flex-end;
+  }
+
+  .filter__button {
+    width: 6rem;
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    background-color: #813052;
+    color: #fff;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0 0 1rem 1rem;
+  }
 }

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import LoadingIndicator from '../components/LoadingIndicator';
-import { FaCloudDownloadAlt, FaRegHeart, FaStar } from 'react-icons/fa';
+import { FaCloudDownloadAlt, FaHeart, FaStar } from 'react-icons/fa';
+import styles from './Detail.module.css';
 
 const Detail = () => {
   const { id } = useParams();
@@ -21,37 +22,48 @@ const Detail = () => {
   }, []);
 
   return (
-    <div>
+    <>
       {loading ? (
         <LoadingIndicator />
       ) : (
-        <div>
-          <img
+        <div className={styles.container}>
+          {/* <img
+            className={styles.background}
             id="background"
             src={movie.background_image_original}
             alt={`background image of ${movie.title}`}
-          />
-          <img id="cover" src={movie.large_cover_image} alt={`cover of ${movie.title}`} />
-          <div>
-            <div className="movie_title">
-              <h1>{movie.title_long}</h1>
-              <span>
-                <FaStar /> {movie.rating}
-              </span>
+          /> */}
+          <div
+            className={styles.background}
+            style={{ backgroundImage: `url(${movie.background_image_original})` }}
+          ></div>
+          <div className={styles.content__container}>
+            <img id="cover" src={movie.large_cover_image} alt={`cover of ${movie.title}`} />
+            <div className={styles.content}>
+              <div className={styles.title}>
+                <h1>{movie.title}</h1>
+                <h2>{movie.year}</h2>
+              </div>
+              <div className={styles.user__likes}>
+                <span className={styles.star}>
+                  <FaStar style={{ color: 'gold' }} />
+                  &nbsp;{movie.rating}
+                </span>
+                <span className={styles.download}>
+                  <FaCloudDownloadAlt style={{ color: 'skyblue' }} />
+                  &nbsp;{Number(movie.download_count).toLocaleString('en')}
+                </span>
+                <span className={styles.like}>
+                  <FaHeart style={{ color: 'red' }} />
+                  &nbsp;{Number(movie.like_count).toLocaleString('en')}
+                </span>
+              </div>
+              <div className={styles.summary}>
+                <h4>Runtime - {movie.runtime}m</h4>
+                <p>{movie.description_full}</p>
+              </div>
             </div>
-            <div className="movie_user-likes">
-              <span>
-                <FaCloudDownloadAlt /> {movie.download_count}
-              </span>
-              <span>
-                <FaRegHeart /> {movie.like_count}
-              </span>
-            </div>
-            <div className="movie_content">
-              <h4>Runtime - {movie.runtime}m</h4>
-              <p>{movie.description_full}</p>
-            </div>
-            <ul className="movie_tags">
+            <ul className={styles.genres}>
               {movie.genres.map((g) => (
                 <li key={g}>{g}</li>
               ))}
@@ -59,7 +71,7 @@ const Detail = () => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
