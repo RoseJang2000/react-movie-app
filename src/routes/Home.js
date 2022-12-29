@@ -3,6 +3,7 @@ import Movie from '../components/Movie';
 import LoadingIndicator from '../components/LoadingIndicator';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { MdKeyboardArrowUp } from 'react-icons/md';
+import axios from 'axios';
 
 import styles from './Home.module.css';
 
@@ -12,12 +13,25 @@ const Home = () => {
   const [sort, setSort] = useState('download_count');
   const [rating, setRating] = useState(8.0);
   const [movies, setMovies] = useState([]);
+  const [fetching, setFetching] = useState(false);
+  const [page, setPage] = useState(1);
+
   const getMovies = async () => {
     const json = await (
-      await fetch(`https://yts.mx/api/v2/list_movies.json?minimum_rating=${rating}&sort_by=${sort}`)
+      await fetch(
+        `https://yts.mx/api/v2/list_movies.json?minimum_rating=${rating}&sort_by=${sort}&limit=9&page=${page}`
+      )
     ).json();
-    setMovies(json.data.movies);
-    setMovies((current) => current.filter((movie) => movie.summary !== ''));
+    setMovies((prev) => [...prev, ...json.data.movies]);
+    // setMovies((current) => current.filter((movie) => movie.summary !== ''));
+    setLoading(false);
+
+    // await axios
+    //   .get(
+    //     `https://yts.mx/api/v2/list_movies.json?minimum_rating=${rating}&sort_by=${sort}&limit=9&page=${page}`
+    //   )
+    //   .then((resp) => setMovies(resp.data.data.movies.filter((movie) => movie.summary !== '')))
+    //   .catch((err) => console.log(err));
     setLoading(false);
   };
 
@@ -29,9 +43,31 @@ const Home = () => {
     setIsShow((current) => !current);
   };
 
+  const handleScroll = () => {
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = Math.ceil(document.documentElement.scrollTop);
+    const clientHeight = document.documentElement.clientHeight;
+
+    // console.log('scrollTop', scrollTop);
+    // console.log('clientHeight', clientHeight);
+    // console.log('scrollHeight', scrollHeight);
+
+    if (scrollTop + clientHeight === scrollHeight) {
+      console.log('bottom!');
+      setPage((prev) => prev + 1);
+    }
+  };
+
   useEffect(() => {
     getMovies();
-  }, [sort]);
+  }, [sort, page]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  });
 
   return (
     <div>
